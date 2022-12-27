@@ -1,7 +1,7 @@
 name: flutter_async_autocomplete
-description: A new Flutter package project.
+description: make easy to dynamic autocomplete input
 version: 0.0.1
-homepage:
+homepage: https://github.com/rahmanrezaee/flutter_async_autocomplete
 
 environment:
   sdk: '>=2.18.6 <3.0.0'
