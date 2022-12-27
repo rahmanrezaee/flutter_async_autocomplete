@@ -183,16 +183,14 @@ class _AsyncAutocompleteState<T> extends State<AsyncAutocomplete<T>> {
       setState(() => _isLoading = true);
       if (_debounce != null && _debounce!.isActive) _debounce!.cancel();
       _debounce = Timer(widget.debounceDuration, () async {
-        if (_previousAsyncSearchText != input ||
-            _previousAsyncSearchText.isEmpty ||
-            input.isEmpty) {
-          _suggestions = await widget.asyncSuggestions!(input) as List<T>;
-          setState(() {
-            _isLoading = false;
-            _previousAsyncSearchText = input;
-          });
-          rebuildOverlay();
-        }
+        // if (input.isEmpty) {
+        _suggestions = await widget.asyncSuggestions!(input) as List<T>;
+        setState(() {
+          _isLoading = false;
+          _previousAsyncSearchText = input;
+        });
+        rebuildOverlay();
+        // }
       });
     }
   }
