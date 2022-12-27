@@ -70,7 +70,7 @@ class AsyncAutocomplete<T> extends StatefulWidget {
   final Widget progressIndicatorBuilder;
 
   /// Can be used to validate field value
-  final String Function(String?)? validator;
+  final String? Function(String?)? validator;
 
   /// Creates a autocomplete widget to help you manage your suggestions
   const AsyncAutocomplete(
@@ -227,9 +227,8 @@ class _AsyncAutocompleteState<T> extends State<AsyncAutocomplete<T>> {
                     _focusNode.unfocus();
                   },
                   onEditingComplete: () => closeOverlay(),
-                  validator: widget.validator != null
-                      ? (value) => widget.validator!(value)
-                      : null // (value) {}
+                  validator: widget.validator
+                  // (value) {}
                   )
             ]));
   }
