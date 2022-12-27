@@ -20,6 +20,9 @@ class AsyncAutocomplete<T> extends StatefulWidget {
   /// Function that handles the changes to the input
   final Function(String)? onChanged;
 
+  /// Function that handles the save to the input
+  final Function(String?)? onSaved;
+
   /// Function that handles the submission of the input
   final Function(String)? onSubmitted;
 
@@ -80,6 +83,7 @@ class AsyncAutocomplete<T> extends StatefulWidget {
       this.controller,
       this.decoration = const InputDecoration(),
       this.onChanged,
+      this.onSaved,
       this.onTapItem,
       this.maxListHeight = 150,
       this.onSubmitted,
@@ -221,6 +225,7 @@ class _AsyncAutocompleteState<T> extends State<AsyncAutocomplete<T>> {
                   cursorColor: widget.cursorColor ?? Colors.blue,
                   style: widget.inputTextStyle,
                   onChanged: (value) => widget.onChanged?.call(value),
+                  onSaved: (value) => widget.onSaved?.call(value),
                   onFieldSubmitted: (value) {
                     widget.onSubmitted?.call(value);
                     closeOverlay();
