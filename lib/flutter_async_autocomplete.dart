@@ -69,6 +69,9 @@ class AsyncAutocomplete<T> extends StatefulWidget {
   /// Can be used to set different keyboardTypes to your field
   final TextInputType keyboardType;
 
+  /// Can be used to set max hight to auto items
+  final double maxListHeight;
+
   /// Can be used to manage TextField focus
   final FocusNode? focusNode;
 
@@ -106,6 +109,7 @@ class AsyncAutocomplete<T> extends StatefulWidget {
       this.decoration = const InputDecoration(),
       this.onChanged,
       this.onTapItem,
+      this.maxListHeight = 150,
       this.onSubmitted,
       this.inputFormatter = const [],
       this.initialValue,
@@ -175,7 +179,7 @@ class _AsyncAutocompleteState<T> extends State<AsyncAutocomplete<T>> {
                       suggestionBuilder: widget.suggestionBuilder,
                       progressIndicatorBuilder: widget.progressIndicatorBuilder,
                       items: _suggestions,
-                      maxListHeight: 500,
+                      maxListHeight: widget.maxListHeight,
                       suggestionTextStyle: widget.suggestionTextStyle,
                       suggestionBackgroundColor:
                           widget.suggestionBackgroundColor,
