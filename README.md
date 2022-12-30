@@ -3,7 +3,7 @@
 A Flutter plugin make easy to dynamic autocomplete input
 
 # Preview
-<img src="[https://i.imgur.com/ZWnhY9T.png](https://raw.githubusercontent.com/rahmanrezaee/flutter_async_autocomplete/master/preview/preview.gif)" height="280">
+<img src="https://i.imgur.com/ZWnhY9T.png](https://raw.githubusercontent.com/rahmanrezaee/flutter_async_autocomplete/master/preview/preview.gif?raw=true" height="280">
 
 
 ## ToDo
@@ -104,28 +104,28 @@ class Country {
 You can customize other aspects of the autocomplete widget such as the suggestions text style, background color and others as shown in example below:
 
 ``` dart
-    EasyAutocomplete(
-        ...
-        ,
-        cursorColor: Colors.purple,
-            decoration: InputDecoration(
-            contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-            focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(5),
-                borderSide: BorderSide(
-                color: Colors.purple,
-                style: BorderStyle.solid
-                )
-            ),
-            enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(5),
-                borderSide: BorderSide(
-                color: Colors.purple,
-                style: BorderStyle.solid
-                )
+EasyAutocomplete(
+    ...
+    ,
+    cursorColor: Colors.purple,
+        decoration: InputDecoration(
+        contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+        focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(5),
+            borderSide: BorderSide(
+            color: Colors.purple,
+            style: BorderStyle.solid
             )
-        ),       
-    )
+        ),
+        enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(5),
+            borderSide: BorderSide(
+            color: Colors.purple,
+            style: BorderStyle.solid
+            )
+        )
+    ),       
+)
        
 ```
 The above example will generate something like below preview:
