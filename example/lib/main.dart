@@ -14,6 +14,9 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   var autoController = TextEditingController();
+
+  var key = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -27,7 +30,8 @@ class _MyAppState extends State<MyApp> {
             alignment: Alignment.center,
             child: AsyncAutocomplete<Country>(
               controller: autoController,
-              
+              inputKey: key,
+              onTap: () => print('onTap'),
               onTapItem: (Country country) {
                 autoController.text = country.name;
                 print("selected Country ${country.name}");
