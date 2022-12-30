@@ -23,6 +23,12 @@ class AsyncAutocomplete<T> extends StatefulWidget {
   /// Function that handles the save to the input
   final Function(String?)? onSaved;
 
+  /// Function that handles the tap to the input
+  final Function()? onTap;
+
+  /// Function that handles the tap to the input
+  final GlobalKey? inputKey;
+
   /// Function that handles the submission of the input
   final Function(String)? onSubmitted;
 
@@ -75,15 +81,33 @@ class AsyncAutocomplete<T> extends StatefulWidget {
   /// Can be used to validate field value
   final String? Function(String?)? validator;
 
+  /// Can be used to controller of listview in overlay of field value
+  final ScrollController? scrollBarController;
+
+  /// Can be used to shadow elevation of listview in overlay of field value
+  final double? elevation;
+
+  /// Can be used to scrollbar thickness of listview in overlay of field value
+  final double? thicknessScrollbar;
+
+  /// Can be used to show or hide scrollbar of listview in overlay of field value
+  final bool? thumbVisibilityScrollbar;
+
   /// Creates a autocomplete widget to help you manage your suggestions
   const AsyncAutocomplete(
       {required this.asyncSuggestions,
       required this.suggestionBuilder,
       this.progressIndicatorBuilder = const CircularProgressIndicator(),
       this.controller,
+      this.elevation = 0,
+      this.thicknessScrollbar = 0,
+      this.thumbVisibilityScrollbar = false,
+      this.scrollBarController,
       this.decoration = const InputDecoration(),
       this.onChanged,
       this.onSaved,
+      this.inputKey,
+      this.onTap,
       this.onTapItem,
       this.maxListHeight = 150,
       this.onSubmitted,
@@ -152,6 +176,10 @@ class _AsyncAutocompleteState<T> extends State<AsyncAutocomplete<T>> {
                   offset: Offset(0.0, size.height + 5.0),
                   child: FilterableList(
                       loading: _isLoading,
+                      scrollBarController: widget.scrollBarController,
+                      elevation: widget.elevation,
+                      thicknessScrollbar: widget.thicknessScrollbar,
+                      thumbVisibilityScrollbar: widget.thumbVisibilityScrollbar,
                       suggestionBuilder: widget.suggestionBuilder,
                       progressIndicatorBuilder: widget.progressIndicatorBuilder,
                       items: _suggestions,
@@ -217,6 +245,8 @@ class _AsyncAutocompleteState<T> extends State<AsyncAutocomplete<T>> {
               TextFormField(
                   decoration: widget.decoration,
                   controller: _controller,
+                  key: widget.inputKey,
+                  onTap: widget.onTap?.call(),
                   inputFormatters: widget.inputFormatter,
                   autofocus: widget.autofocus,
                   focusNode: _focusNode,
@@ -262,11 +292,14 @@ class _AsyncAutocompleteState<T> extends State<AsyncAutocomplete<T>> {
 class FilterableList<T> extends StatelessWidget {
   final List<T> items;
   final Function(T data) onItemTapped;
-  final double elevation;
+  final double? elevation;
   final double maxListHeight;
+  final double? thicknessScrollbar;
   final TextStyle suggestionTextStyle;
   final Color? suggestionBackgroundColor;
   final bool loading;
+  final bool? thumbVisibilityScrollbar;
+  final ScrollController? scrollBarController;
   final Widget Function(T data) suggestionBuilder;
   final Widget? progressIndicatorBuilder;
 
@@ -275,6 +308,9 @@ class FilterableList<T> extends StatelessWidget {
       required this.onItemTapped,
       required this.suggestionBuilder,
       this.elevation = 5,
+      this.thumbVisibilityScrollbar = false,
+      this.thicknessScrollbar = 10,
+      this.scrollBarController,
       this.maxListHeight = 150,
       this.suggestionTextStyle = const TextStyle(),
       this.suggestionBackgroundColor,
@@ -298,22 +334,28 @@ class FilterableList<T> extends StatelessWidget {
         constraints: BoxConstraints(maxHeight: maxListHeight),
         child: Visibility(
           visible: items.isNotEmpty || loading,
-          child: ListView.builder(
-            shrinkWrap: true,
-            padding: const EdgeInsets.all(5),
-            itemCount: loading ? 1 : items.length,
-            itemBuilder: (context, index) {
-              if (loading) {
-                return Container(
-                    alignment: Alignment.center,
-                    padding: EdgeInsets.all(10),
-                    child: progressIndicatorBuilder!);
-              }
+          child: Scrollbar(
+            thumbVisibility: thumbVisibilityScrollbar,
+            thickness: thicknessScrollbar,
+            controller: scrollBarController ?? ScrollController(),
+            child: ListView.builder(
+              shrinkWrap: true,
+              controller: scrollBarController ?? ScrollController(),
+              padding: const EdgeInsets.all(5),
+              itemCount: loading ? 1 : items.length,
+              itemBuilder: (context, index) {
+                if (loading) {
+                  return Container(
+                      alignment: Alignment.center,
+                      padding: EdgeInsets.all(10),
+                      child: progressIndicatorBuilder!);
+                }
 
-              return InkWell(
-                  child: suggestionBuilder(items[index]),
-                  onTap: () => onItemTapped(items[index]));
-            },
+                return InkWell(
+                    child: suggestionBuilder(items[index]),
+                    onTap: () => onItemTapped(items[index]));
+              },
+            ),
           ),
         ),
       ),
