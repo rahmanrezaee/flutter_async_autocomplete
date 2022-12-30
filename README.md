@@ -3,7 +3,7 @@
 A Flutter plugin make easy to dynamic autocomplete input
 
 # Preview
-<img src="https://raw.githubusercontent.com/rahmanrezaee/flutter_async_autocomplete/master/preview/preview.gif?raw=true" height="280">
+<img src="https://raw.githubusercontent.com/rahmanrezaee/flutter_async_autocomplete/master/preview/preview.gif?raw=true" height="480">
 
 
 ## ToDo
