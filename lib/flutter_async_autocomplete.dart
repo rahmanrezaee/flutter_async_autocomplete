@@ -326,35 +326,37 @@ class FilterableList<T> extends StatelessWidget {
         scaffold?.widget.backgroundColor ??
         theme.scaffoldBackgroundColor;
 
-    return Material(
-      elevation: 5,
-      borderRadius: BorderRadius.circular(5),
-      color: _suggestionBackgroundColor,
-      child: Container(
-        constraints: BoxConstraints(maxHeight: maxListHeight),
-        child: Visibility(
-          visible: items.isNotEmpty || loading,
-          child: Scrollbar(
-            thumbVisibility: thumbVisibilityScrollbar,
-            thickness: thicknessScrollbar,
-            controller: scrollBarController ?? ScrollController(),
-            child: ListView.builder(
-              shrinkWrap: true,
+    return TextFieldTapRegion(
+      child: Material(
+        elevation: 5,
+        borderRadius: BorderRadius.circular(5),
+        color: _suggestionBackgroundColor,
+        child: Container(
+          constraints: BoxConstraints(maxHeight: maxListHeight),
+          child: Visibility(
+            visible: items.isNotEmpty || loading,
+            child: Scrollbar(
+              thumbVisibility: thumbVisibilityScrollbar,
+              thickness: thicknessScrollbar,
               controller: scrollBarController ?? ScrollController(),
-              padding: const EdgeInsets.all(5),
-              itemCount: loading ? 1 : items.length,
-              itemBuilder: (context, index) {
-                if (loading) {
-                  return Container(
-                      alignment: Alignment.center,
-                      padding: EdgeInsets.all(10),
-                      child: progressIndicatorBuilder!);
-                }
-
-                return InkWell(
-                    child: suggestionBuilder(items[index]),
-                    onTap: () => onItemTapped(items[index]));
-              },
+              child: ListView.builder(
+                shrinkWrap: true,
+                controller: scrollBarController ?? ScrollController(),
+                padding: const EdgeInsets.all(5),
+                itemCount: loading ? 1 : items.length,
+                itemBuilder: (context, index) {
+                  if (loading) {
+                    return Container(
+                        alignment: Alignment.center,
+                        padding: EdgeInsets.all(10),
+                        child: progressIndicatorBuilder!);
+                  }
+    
+                  return InkWell(
+                      child: suggestionBuilder(items[index]),
+                      onTap: () => onItemTapped(items[index]));
+                },
+              ),
             ),
           ),
         ),
